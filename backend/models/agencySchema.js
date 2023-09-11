@@ -14,26 +14,28 @@ const agencySchema = new mongoose.Schema(
       required: true,
     },
     location: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
     },
     uniqueId: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
     },
     service: {
-        type: String,
-        required: true,
-        trim: true
-    }
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
   { timestamps: true },
 );
 
 const Agency = mongoose.model('Agency', agencySchema);
+
+//git check
 
 module.exports = Agency;
