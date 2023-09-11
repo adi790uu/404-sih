@@ -13,6 +13,16 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    phoneNum: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    adhaarId: {
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
   { timestamps: true },
 );
