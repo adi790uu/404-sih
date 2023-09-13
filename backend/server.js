@@ -8,6 +8,7 @@ const cors = require('cors');
 const errorHandler = require('./middleware/errorHandler');
 const { Server } = require('socket.io');
 const User = require('./models/userSchema');
+const Request = require('./models/requestSchema');
 
 app.use(
   cors({
@@ -21,7 +22,6 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/v1/users', require('./routes/userRoutes'));
-app.use('/api/v1/test', require('./routes/testroute'));
 app.use('/api/v1/agency', require('./routes/agencyRoutes'));
 
 app.get('/status', (req, res) => {
@@ -50,7 +50,11 @@ io.on('connection', (socket) => {
     const userId = req.user;
     const user = await User.findById(userId);
 
-    const info = { type: type, location: location, userInfo: user };
+    const info = await Request.create({
+      RequestType: type,
+      location: location,
+      user: user,
+    });
 
     socket.emit('userRequest', info);
   });

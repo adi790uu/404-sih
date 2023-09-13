@@ -2,10 +2,16 @@ const express = require('express');
 const router = express.Router();
 const validateToken = require('../middleware/validateToken');
 
-const { registerUser, authUser, getUser } = require('../controllers/users');
+const {
+  registerUser,
+  authUser,
+  registerEmployee,
+  authEmployee,
+} = require('../controllers/users');
 
 router.route('/register').post(registerUser);
 router.route('/login').post(authUser);
-router.route('/user').get(validateToken, getUser);
+router.route('/employee/register').post(registerEmployee);
+router.route('/employee/authEmployee').post(authEmployee);
 
 module.exports = router;
