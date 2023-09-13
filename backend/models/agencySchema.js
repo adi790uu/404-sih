@@ -30,6 +30,14 @@ const agencySchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    active: {
+      type: Boolean,
+      default: true,
+    },
+    busy: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );

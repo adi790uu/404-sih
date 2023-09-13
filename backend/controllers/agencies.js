@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Agency = require('../models/agencySchema');
+const Request = require('../models/requestSchema');
 
 const registerAgency = async (req, res) => {
   const { orgName, password, location, uniqueId, service } = req.body;
@@ -59,7 +60,16 @@ const authAgency = async (req, res) => {
 
 const getAgencies = async (req, res) => {
   const agencies = await Agency.find();
-  res.status(201).json({ agencies });
+  res.json({ agencies });
 };
 
-module.exports = { registerAgency, authAgency, getAgencies };
+const getRequests = async (req, res) => {
+  const { type } = req.body;
+  const requests = await Request.find({ RequestType: type });
+  if (requests) {
+    return res.status(201).json(requests);
+  }
+  return res.json({ msg: 'Some error occured' });
+};
+
+module.exports = { registerAgency, authAgency, getAgencies, getRequests };

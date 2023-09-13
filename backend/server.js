@@ -9,6 +9,7 @@ const errorHandler = require('./middleware/errorHandler');
 const { Server } = require('socket.io');
 const User = require('./models/userSchema');
 const Request = require('./models/requestSchema');
+const Agency = require('./models/agencySchema');
 
 app.use(
   cors({
@@ -59,7 +60,23 @@ io.on('connection', (socket) => {
     socket.emit('userRequest', info);
   });
 
-  socket.on('sendMessage', async (data) => {});
+  socket.on('requestTaken', async (data) => {
+    const { requestId, agencyId } = data;
+    const request = await Request.findById(requestId);
+    const agency = await Agency.findById(agencyId);
+
+    agency.busy = true;
+    agency.active = false;
+
+    request.pending = false;
+    request.ongoing = true;
+
+    await agency.save();
+    await request.save();
+
+    const agencies = await Agency.find();
+    socket.emit('updatedState', agencies);
+  });
 
   socket.on('disconnect', () => {
     console.log(`Socket ${socket.id} disconnected!`);
