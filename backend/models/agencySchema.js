@@ -2,12 +2,17 @@ const mongoose = require('mongoose');
 
 const agencySchema = new mongoose.Schema(
   {
-    org: {
+    agencyName: {
       type: String,
       unique: true,
       trim: true,
       required: true,
       index: 'text',
+    },
+    type: {
+      type: String,
+      trim: true,
+      required: true,
     },
     password: {
       type: String,

@@ -64,8 +64,13 @@ const getAgencies = async (req, res) => {
 };
 
 const getRequests = async (req, res) => {
-  const { type } = req.body;
-  const requests = await Request.find({ RequestType: type });
+  const { agencyId } = req.body;
+  const agency = await Agency.findById(agencyId);
+
+  const requests = await Request.find({
+    RequestType: { $elemMatch: { $eq: agency.type } },
+  });
+
   if (requests) {
     return res.status(201).json(requests);
   }

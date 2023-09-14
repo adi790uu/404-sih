@@ -3,11 +3,13 @@ const User = require('../models/userSchema');
 
 const requestSchema = new mongoose.Schema(
   {
-    RequestType: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+    RequestType: [
+      {
+        type: String,
+        required: true,
+        trim: true,
+      },
+    ],
     location: {
       type: String,
       required: true,
