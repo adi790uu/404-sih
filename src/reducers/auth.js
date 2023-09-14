@@ -5,6 +5,7 @@ export default (state = {authData: null}, action) => {
       case AUTH:
         localStorage.setItem('profile', JSON.stringify({...action?.data}))
         return {...state, authData: action?.data};
+        //propfile = token, email, phoneNum
   
       case LOGOUT:
         localStorage.clear();

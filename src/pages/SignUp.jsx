@@ -17,7 +17,7 @@ export default function SignUp() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    name:'', pnumber:'', password:'', adharno:'', location:'', email:''
+    name:'', phoneNum:'', password:'', adhaarId:'', location:'', email:''
   })
 
   const handleSubmit = (event) => {
@@ -62,10 +62,10 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12} sm={12}>
                 <TextField
-                  name="pnumber"
+                  name="phoneNum"
                   required
                   fullWidth
-                  id="pnumber"
+                  id="phoneNum"
                   onChange={handleChange}
                   label="Phone Number"
                 />
@@ -85,9 +85,9 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  name="adharno"
+                  name="adhaarId"
                   label="Adhar card Number"
-                  id="adharno"
+                  id="adhaarId"
                   onChange={handleChange}
                 />
               </Grid>
@@ -102,7 +102,7 @@ export default function SignUp() {
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
@@ -121,7 +121,7 @@ export default function SignUp() {
             >
             Fetch Location
             </Button>
-              </Grid>
+              </Grid> */}
               <Grid item xs={6}>
               <Button
               type="submit"
@@ -140,9 +140,11 @@ export default function SignUp() {
             
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
-                   Sign in
+              <Button>
+                <Link to='/signin'>
+                  Sign in
                 </Link>
+                </Button>
               </Grid>
             </Grid>
           </Box>

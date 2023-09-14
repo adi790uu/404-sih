@@ -17,7 +17,7 @@ export default function WorkerSignUp() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    agencyname:'', yourpnumber:'', password:'', yourname:'', agencyNumber:''
+    email:'', phoneNum:'', password:'',  employeeId:''
   })
 
   const handleSubmit = (event) => {
@@ -54,23 +54,23 @@ export default function WorkerSignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="agencyname"
-                  label="Agency Name"
-                  name="agencyname"
+                  id="email"
+                  label="Email"
+                  name="email"
                   onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
                 <TextField
-                  name="yourpnumber"
+                  name="phoneNum"
                   required
                   fullWidth
-                  id="yourpnumber"
+                  id="phoneNum"
                   label="Your Phone Number"
                   onChange={handleChange}
                 />
               </Grid>
-              <Grid item xs={12} sm={12}>
+              {/* <Grid item xs={12} sm={12}>
                 <TextField
                   required
                   fullWidth
@@ -79,15 +79,15 @@ export default function WorkerSignUp() {
                   name="yourname"
                   onChange={handleChange}
                 />
-              </Grid>
+              </Grid> */}
               
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  name="agencyNumber"
-                  label="Agency Number"
-                  id="agencyNumber"
+                  name="employeeId"
+                  label="Agency employeeId"
+                  id="employeeId"
                   onChange={handleChange}
                 />
               </Grid>

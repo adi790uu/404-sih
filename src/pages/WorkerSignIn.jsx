@@ -17,7 +17,7 @@ export default function WorkerSignIn() {
   const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
-    phoneNumber:'', password:''
+    email:'', password:''
   })
 
   const handleSubmit = (event) => {
@@ -48,9 +48,9 @@ export default function WorkerSignIn() {
               margin="normal"
               required
               fullWidth
-              id="phoneNumber"
-              label="Phone Number"
-              name="phoneNumber"
+              id="email"
+              label="Email"
+              name="email"
               onChange={handleChange}
             />
             <TextField

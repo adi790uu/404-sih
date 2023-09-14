@@ -8,21 +8,31 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import {Link} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import {agencysignup} from '../actions/auth';
+import {createPost} from '../actions/posts';
 
 import MarqueeSlide from "./MarqueeSlide";
 
 export default function Hero() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [disaster, setDisaster] = useState("");
+  const [formData, setFormData] = useState({
+    desc:'', location:'',  disaster:disaster
+  })
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(formData);
+    dispatch(createPost(formData, navigate))
   };
 
-  const [disaster, setDisaster] = React.useState("");
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleChange = (event) => {
+
+  const handleCheckBox = (event) => {
     setDisaster(event.target.value);
   };
 
@@ -61,7 +71,7 @@ export default function Hero() {
                 id="demo-simple-select"
                 value={disaster}
                 label="Age"
-                onChange={handleChange}
+                onChange={handleCheckBox}
               >
                 <MenuItem value={"Fire Hazard"}>Fire Hazard</MenuItem>
                 <MenuItem value={"Flood"}>Flood</MenuItem>
@@ -76,6 +86,7 @@ export default function Hero() {
               id="desc"
               label="description"
               name="desc"
+              onChange={handleChange}
             />
 
             <TextField
@@ -85,7 +96,7 @@ export default function Hero() {
               id="location"
               label="Location"
               name="location"
-              autoComplete="email"
+              onChange={handleChange}
             />
 
             <Button

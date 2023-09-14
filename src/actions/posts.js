@@ -57,14 +57,13 @@ export const getPostsBySearch = (searchQuery) => async (dispatch) => {
 
 export const createPost = (post, Navigate) => async(dispatch) => {
     try {
-        dispatch({type:START_LOADING})
         const {data} = await api.createPosts(post);
-        Navigate(`/posts/${data._id}`)
+        //data = token , email, phonenum
+        // Navigate(`/posts/${data._id}`)
         dispatch({
             type : CREATE,
             payload: data
         });
-        dispatch({type:END_LOADING})
     } catch (error) {
         console.log(error);
     }

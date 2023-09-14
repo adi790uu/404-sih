@@ -75,8 +75,8 @@ export default function SignIn() {
             <Grid container>
               <Grid item>
               <Button>
-                <Link to='/signin'>
-                  Sign in
+                <Link to='/signup'>
+                  Sign up
                 </Link>
                 </Button>
               </Grid>

@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import {Link} from 'react-router-dom'
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -38,6 +39,29 @@ function Navbar() {
           >
             404 Help Found.gov.in
           </Typography>
+
+
+
+          <Button>
+                <Link to='/workersignin'>
+                  worker Sign In
+                </Link>
+                </Button>
+                <Button>
+                <Link to='/workersignup'>
+                  worker Sign up
+                </Link>
+                </Button>
+          <Button>
+                <Link to='/signin'>
+                  user Sign In
+                </Link>
+                </Button>
+          <Button>
+                <Link to='/signup'>
+                  user Sign up
+                </Link>
+                </Button>
 
           
           {/* <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
