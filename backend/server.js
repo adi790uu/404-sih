@@ -20,7 +20,6 @@ app.use(
   }),
 );
 
-app.use(cors());
 app.use(express.json());
 
 app.use('/api/v1/users', require('./routes/userRoutes'));
@@ -89,6 +88,7 @@ io.on('connection', (socket) => {
     });
 
     const collabData = await collabRequest.populate('request');
+
     const typ1 = `fire-${city}`;
     const typ2 = `hospital-${city}`;
     const typ3 = `police-${city}`;
@@ -97,12 +97,15 @@ io.on('connection', (socket) => {
     if (fire) {
       socket.to(typ1).emit('collab', collabData);
     }
+
     if (hospital) {
       socket.to(typ2).emit('collab', collabData);
     }
+
     if (police) {
       socket.to(typ3).emit('collab', collabData);
     }
+
     if (rescue) {
       socket.to(typ4).emit('collab', collabData);
     }
@@ -136,6 +139,21 @@ io.on('connection', (socket) => {
 
     const roomType = `type-${city}`;
     socket.to(roomType).emit('updatedState', data);
+  });
+
+  socket.on('acceptCollab', async (data) => {
+    const { agencyId, city } = data;
+    const agency = await Agency.find(agencyId);
+
+    agency.busy = true;
+    agency.active = false;
+
+    await agency.save();
+
+    const typ = `${agency.type}-${city}`;
+    const agencies = await Agency.find();
+
+    socket.to(typ).emit('updatedCollabState', agencies);
   });
 
   socket.on('disconnect', () => {
