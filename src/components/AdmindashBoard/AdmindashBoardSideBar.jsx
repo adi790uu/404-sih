@@ -13,6 +13,8 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 import { Button } from '@mui/material';
 
+const ListItemCss = {boxShadow:'0 0 10px 0 rgba(0,0,0,0.2) inset', padding:'20px', marginBottom:'20px', borderRadius:'20px'}
+
 export default function AdminDashBoardSideBar() {
   const [open, setOpen] = React.useState(true);
 
@@ -22,47 +24,30 @@ export default function AdminDashBoardSideBar() {
 
   return (
     <List
-      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', margin:2  }}
+      sx={{ width: '100%', maxWidth: 560, bgcolor: 'background.paper', margin:2, borderLeft: '5px solid #1976d2'  }}
     //   boxShadow: '-20px 0 10px -20px rgba(0,0,0,0.45) inset'
 
       component="nav"
       aria-labelledby="nested-list-subheader"
       subheader={
-        <ListSubheader component="div" id="nested-list-subheader" sx={{}}>
-          Nested List Items
+        <ListSubheader component="div" id="nested-list-subheader" sx={{fontSize:'20px', fontWeight:'bold', textDecoration:'underline'}}>
+          Collab Requests
         </ListSubheader>
       }
     >
       <ListItemButton>
-        <ListItemText primary="Sent mail" />
+        <ListItemText primary="Sent mail" style={ListItemCss}/>
       </ListItemButton>
       <ListItemButton>
-        <ListItemText primary="Drafts" />
+        <ListItemText primary="Sent mail" style={ListItemCss}/>
       </ListItemButton>
       <ListItemButton>
-        <ListItemText primary="Sent mail" />
+        <ListItemText primary="Sent mail" style={ListItemCss}/>
       </ListItemButton>
       <ListItemButton>
-        <ListItemText primary="Drafts" />
+        <ListItemText primary="Sent mail" style={ListItemCss}/>
       </ListItemButton>
-      <ListItemButton>
-        <ListItemText primary="Sent mail" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemText primary="Drafts" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemText primary="Sent mail" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemText primary="Drafts" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemText primary="Sent mail" />
-      </ListItemButton>
-      <ListItemButton>
-        <ListItemText primary="Drafts" />
-      </ListItemButton>
+     
       
       
     </List>

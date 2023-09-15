@@ -21,7 +21,7 @@ app.use(
 );
 
 app.use(express.json());
-
+app.use(cors());
 app.use('/api/v1/users', require('./routes/userRoutes'));
 app.use('/api/v1/agency', require('./routes/agencyRoutes'));
 
@@ -44,26 +44,29 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-  console.log(`User connected! ${socket.id}`);
+  // console.log(`User connected! ${socket.id}`);
 
   socket.on('joinRoom', async (data) => {
-    const { agencyId, city } = data;
-    const agency = await Agency.findById(agencyId);
-    socket.join(`${agency.type}-${city}`);
+    const { agencyName, city } = data;
+    const agency = await Agency.findOne({ agencyName });
+    console.log(`${agency.service}-${city}`);
+    socket.join(`${agency.service}-${city}`);
   });
 
   socket.on('sendInfo', async (data) => {
-    const { type, location } = data;
-    const userId = req.user;
-    const user = await User.findById(userId);
+    console.log(data);
+    const { requestType, location, phoneNum, medicalAssistance, city } = data;
+    const user = await User.findOne({ phoneNum: phoneNum });
 
     const info = await Request.create({
-      RequestType: type,
+      requestType: requestType,
+      medicalAssistance: medicalAssistance,
       location: location,
-      user: user,
+      user: user._id,
     });
-
-    socket.emit('userRequest', info);
+    console.log(info);
+    console.log(`${requestType}-${city}`);
+    socket.to(`${requestType}-${city}`).emit('sendToAgencies', info);
   });
 
   socket.on('collab', async (data) => {
@@ -112,33 +115,21 @@ io.on('connection', (socket) => {
   });
 
   socket.on('requestTaken', async (data) => {
-    const { requestId, agencyId, city } = data;
-    const request = await Request.findById(requestId);
-    const agency = await Agency.findById(agencyId);
-
-    const type = agency.type;
-
-    agency.busy = true;
-    agency.active = false;
-
-    request.pending = false;
-    request.ongoing = true;
-
-    await agency.save();
-    await request.save();
+    const { requestId, agencyName, city } = data;
+    const updateCurrentRequest = await Request.updateOne({
+      currentRequest: requestId,
+    });
+    const request = await Request.findByIdAndDelete(requestId);
+    const agency = await Agency.findOne({ agencyName: agencyName });
+    const type = agency.service;
 
     const requests = await Request.find({
-      RequestType: { $elemMatch: { $eq: type } },
+      requestType: type,
     });
-    const agencies = await Agency.find({ type: type });
 
-    const data = {
-      requests,
-      agencies,
-    };
-
-    const roomType = `type-${city}`;
-    socket.to(roomType).emit('updatedState', data);
+    const roomType = `${type}-${city}`;
+    console.log(roomType);
+    socket.to(roomType).emit('updatedState', requests);
   });
 
   socket.on('acceptCollab', async (data) => {

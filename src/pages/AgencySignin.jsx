@@ -17,7 +17,7 @@ export default function AgencySignIn() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    agencyemail:'', password:''
+    agencyName:'', password:''
   })
 
   const handleSubmit = (event) => {
@@ -49,9 +49,9 @@ export default function AgencySignIn() {
               margin="normal"
               required
               fullWidth
-              id="agencyemail"
-              label="Agency Email Address"
-              name="agencyemail"
+              id="agencyName"
+              label="Agency Name"
+              name="agencyName"
               onChange={handleChange}
             />
             <TextField

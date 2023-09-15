@@ -2,12 +2,11 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema(
   {
-    username: {
+    email: {
       type: String,
-      unique: true,
       trim: true,
       required: true,
-      index: 'text',
+      unique: true,
     },
     password: {
       type: String,
@@ -15,12 +14,14 @@ const userSchema = new mongoose.Schema(
     },
     phoneNum: {
       type: String,
+      unique: true,
       required: true,
       trim: true,
     },
     adhaarId: {
       type: String,
       required: true,
+      unique: true,
       trim: true,
     },
   },

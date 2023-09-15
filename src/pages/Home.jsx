@@ -17,10 +17,17 @@ import MarqueeSlide from '../components/MarqueeSlide';
 
 
 const Home = () => {
+  const [user, setUser] = React.useState(JSON.parse(localStorage.getItem('profile')));
+  React.useEffect(()=>{
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  },[])
+  console.log(user?.userType);
   return (
    
     <div style={{margin:'30px'}}>
+      {(user?.userType === 'normal-user') && (
       <Hero/>
+      )}
 
       <Grid container spacing={2}>
         <Grid item xs={12}>

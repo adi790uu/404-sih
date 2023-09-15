@@ -21,7 +21,7 @@ export default function SignIn() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formData);
+    // console.log(formData);
     dispatch(signup(formData, navigate))
   };
 

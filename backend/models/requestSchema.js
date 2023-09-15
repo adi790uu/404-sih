@@ -3,21 +3,25 @@ const User = require('../models/userSchema');
 
 const requestSchema = new mongoose.Schema(
   {
-    RequestType: [
-      {
-        type: String,
-        required: true,
-        trim: true,
-      },
-    ],
+    requestType: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    medicalAssistance: {
+      type: String,
+      default: false,
+      trim: true,
+    },
     location: {
       type: String,
       required: true,
       trim: true,
     },
     user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      type: String,
+      required: true,
+      trim: true,
     },
     ongoing: {
       type: Boolean,

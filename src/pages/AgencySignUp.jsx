@@ -17,7 +17,7 @@ export default function SignUp() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    agencyname:'', agencypnumber:'', password:'', agencyemail:'', agencyNumber:'', location:'',
+    service:'',agencyName:'', uniqueId:'', password:'', location:'',
   })
 
   const handleSubmit = (event) => {
@@ -54,19 +54,19 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="agencyname"
+                  id="agencyName"
                   label="Agency Name"
-                  name="agencyname"
+                  name="agencyName"
                   onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
                 <TextField
-                  name="agencypnumber"
+                  name="uniqueId"
                   required
                   fullWidth
-                  id="agencypnumber"
-                  label="Agency Phone Number"
+                  id="uniqueId"
+                  label="Unique id"
                   onChange={handleChange}
                 />
               </Grid>
@@ -74,14 +74,14 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="agencyemail"
-                  label="agency Email"
-                  name="agencyemail"
+                  id="service"
+                  label="Service"
+                  name="service"
                   onChange={handleChange}
                 />
               </Grid>
               
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
@@ -90,7 +90,7 @@ export default function SignUp() {
                   id="agencyNumber"
                   onChange={handleChange}
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   required

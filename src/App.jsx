@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
@@ -16,7 +16,13 @@ import { Container } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'; // Changed Redirect to Navigate
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [user, setUser]= useState(JSON.parse(localStorage.getItem('profile')));
+  useEffect(()=>{
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  },[])
+
+  console.log(user?.userType);
   // const user = JSON.parse(localStorage.getItem('profile'));
   
   return (
@@ -26,6 +32,7 @@ function App() {
       <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/agencydashboard" element={<AdminDashBoard/>} />
+      {/* <Route path='/agencydashboard' element={(user?.userType==='agency')? <AdminDashBoard/> : <Navigate to='/'/>} /> */}
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp/>} />
       <Route path="/agencysignin" element={<AgencySignIn />} />
@@ -33,8 +40,8 @@ function App() {
       <Route path="/agencysignup" element={<AgencySignUp />} />
       <Route path="/workersignup" element={<WorkerSignUp />} />
       <Route path="/memberhelppage" element={<MemberHelpPage/>} />
-      <Route path="/memberhelppage" element={<MemberHelpPage/>} />
-      <Route path="/gencyPersonalDashBoard" element={<AgencyPersonalDashBoard/>} />
+      {/* <Route path="/memberhelppage" element={(user?.userType==='worker')?<MemberHelpPage/> : <Navigate to='/'/>} /> */}
+      <Route path="/agencyPersonalDashBoard" element={<AgencyPersonalDashBoard/>} />
       </Routes>
       {/* <Footer/> */}
     </div>
@@ -48,3 +55,4 @@ export default App
 {/* <Route path="/" element={<Navigate to="/posts" />}/>
 <Route path="/posts/:id" element={<PostDetails />} />
 <Route path="/auth" element={!user ? <Auth /> : <Navigate to="/posts" >} /> */}
+

@@ -9,11 +9,6 @@ const agencySchema = new mongoose.Schema(
       required: true,
       index: 'text',
     },
-    type: {
-      type: String,
-      trim: true,
-      required: true,
-    },
     password: {
       type: String,
       required: true,
@@ -34,6 +29,10 @@ const agencySchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+    },
+    currentRequest: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Request',
     },
     active: {
       type: Boolean,

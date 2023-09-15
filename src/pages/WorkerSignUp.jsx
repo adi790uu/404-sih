@@ -17,7 +17,7 @@ export default function WorkerSignUp() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    email:'', phoneNum:'', password:'',  employeeId:''
+    agencyName:'', email:'', phoneNum:'', password:'',  employeeId:''
   })
 
   const handleSubmit = (event) => {
@@ -51,6 +51,15 @@ export default function WorkerSignUp() {
           <Grid item xs={6}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="agencyName"
+              label="Agency Name"
+              name="agencyName"
+              onChange={handleChange}
+            />
                 <TextField
                   required
                   fullWidth
@@ -70,16 +79,6 @@ export default function WorkerSignUp() {
                   onChange={handleChange}
                 />
               </Grid>
-              {/* <Grid item xs={12} sm={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="yourname"
-                  label="Your name"
-                  name="yourname"
-                  onChange={handleChange}
-                />
-              </Grid> */}
               
               <Grid item xs={12}>
                 <TextField
@@ -99,7 +98,6 @@ export default function WorkerSignUp() {
                   label="Password"
                   type="password"
                   id="password"
-                  autoComplete="new-password"
                   onChange={handleChange}
                 />
               </Grid>

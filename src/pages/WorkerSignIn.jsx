@@ -44,6 +44,7 @@ export default function WorkerSignIn() {
             Sign in as a Worker
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          
             <TextField
               margin="normal"
               required
@@ -74,9 +75,11 @@ export default function WorkerSignIn() {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Sign Up"}
+              <Button>
+                <Link to='/workersignup'>
+                  Sign up as a worker
                 </Link>
+                </Button>
               </Grid>
             </Grid>
           </Box>

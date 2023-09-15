@@ -1,85 +1,123 @@
-import React from "react";
+import React, { useState } from 'react';
 
-import CardContent from "@mui/material/CardContent";
-import { Container, TextField, Grid, Card, Box } from "@mui/material";
-import CardMedia from "@mui/material/CardMedia";
+import CardContent from '@mui/material/CardContent';
+import { Container, TextField, Grid, Card, Box } from '@mui/material';
+import CardMedia from '@mui/material/CardMedia';
 
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 export default function MemberHelpPage() {
-  const handleSubmit = (event) => {
+  const [hospital, setHospital] = useState(false);
+  const [fire, setFire] = useState(false);
+  const [police, setPolice] = useState(false);
+  const [rescue, setRescue] = useState(false);
+
+  const [formData, setFormData] = useState({
+    description: '',
+    location: '',
+    hospital,
+    fire,
+    police,
+    rescue
+  });
+  const handleSubmit = async(event) => {
     event.preventDefault();
+    let response = await fetch("http://localhost:4000",{
+      method:"POST",
+      header:{
+        'Content-Type':""
+      }
+    })
   };
 
-  const [disaster, setDisaster] = React.useState("");
-
-  const handleChange = (event) => {
-    setDisaster(event.target.value);
-  };
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   return (
     <Card
       sx={{
-        display: "flex",
+        display: 'flex',
         boxShadow: 6,
-        padding: "20px",
-        borderRadius: "20px",
+        padding: '20px',
+        borderRadius: '20px',
         margin: 4,
       }}
     >
-
-
       <Container>
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
         >
           <Box component="form" onSubmit={handleSubmit} noValidate>
             <Typography component="h1" variant="h5" sx={{ marginTop: 2 }}>
               Need Assistance
             </Typography>
-
-            <FormControl fullWidth margin="normal">
-              <InputLabel id="demo-simple-select-label">assistance</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={disaster}
-                label="assistance"
-                onChange={handleChange}
-              >
-                <MenuItem value={"Fire Hazard"}>Ambulance</MenuItem>
-                <MenuItem value={"Flood"}>rescue team</MenuItem>
-                <MenuItem value={"let it be X"}>police</MenuItem>
-                <MenuItem value={"let it be Y"}>Let it be X</MenuItem>
-              </Select>
-            </FormControl>
+            <br />
 
             <TextField
               margin="normal"
               fullWidth
-              id="desc"
+              id="description"
               label="description"
-              name="desc"
+              name="description"
+              onChange={handleChange}
             />
 
-<input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-  <label for="vehicle1"> I have a bike</label><br />
-  <input type="checkbox" id="vehicle2" name="vehicle2" value="Car" />
-  <label for="vehicle2"> I have a car</label><br />
-  <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat" />
-  <label for="vehicle3"> I have a boat</label><br />
-  <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat" />
-  <label for="vehicle3"> I have a boat</label>
+            <label for="fire">
+              <input
+                type="checkbox"
+                id="fire"
+                name="fire"
+                value="true"
+                onChange={() => setFire(true)}
+              />
+              fire
+            </label>
+            <br />
+
+            <label for="hospital">
+              <input
+                type="checkbox"
+                id="hospital"
+                name="hospital"
+                value="true"
+                onChange={() => setHospital(true)}
+              />
+              Hospital
+            </label>
+            <br />
+
+            <label for="police">
+              <input
+                type="checkbox"
+                id="police"
+                name="police"
+                value="true"
+                onChange={() => setPolice(true)}
+              />
+              Police
+            </label>
+            <br />
+
+            <label for="rescue">
+              <input
+                type="checkbox"
+                id="rescue"
+                name="rescue"
+                value="true"
+                onChange={() => setRescue(true)}
+              />
+              Rescue
+            </label>
 
             <TextField
               margin="normal"
@@ -88,7 +126,7 @@ export default function MemberHelpPage() {
               id="location"
               label="Location"
               name="location"
-              autoComplete="email"
+              onChange={handleChange}
             />
 
             <Button
@@ -102,10 +140,10 @@ export default function MemberHelpPage() {
 
             <Button
               variant="contained"
+              type='submit'
               size="large"
-              color="error"
               fullWidth
-              sx={{ height: "70px" }}
+              sx={{ height: '70px', bgcolor:"green" }}
             >
               Help
             </Button>

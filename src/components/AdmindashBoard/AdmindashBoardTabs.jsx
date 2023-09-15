@@ -4,7 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import AdminDashBoardAccodion from './AdminDashBoardAccordion';
+import AdminDashBoardAccordion from './AdminDashBoardAccordion';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -39,7 +39,9 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs() {
+export default function BasicTabs(requests) {
+
+  // console.log('000000000000', requests.requests);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -47,32 +49,31 @@ export default function BasicTabs() {
   };
 
   return (
-    <Box sx={{ width: '100%' , }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider',}}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered  variant="fullWidth">
+    <Box sx={{ width: '100%' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+          centered
+          variant="fullWidth"
+        >
           <Tab label="Pending" {...a11yProps(0)} />
           <Tab label="Completed" {...a11yProps(1)} />
-          {/* <Tab label="Completed" {...a11yProps(2)} /> */}
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <AdminDashBoardAccodion/> <br />
-        <AdminDashBoardAccodion/> <br />
-        <AdminDashBoardAccodion/> <br />
-        <AdminDashBoardAccodion/> <br />
+        {/* {requests.map((req, index) => { */}
+      {requests.requests.map((req, index)=>{
+        return(
+          <AdminDashBoardAccordion req={req} key={index} index={index} /> 
+        )
+      })}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-      <AdminDashBoardAccodion/> <br />
-        <AdminDashBoardAccodion/> <br />
-        <AdminDashBoardAccodion/> <br />
-        <AdminDashBoardAccodion/> <br />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-      <AdminDashBoardAccodion/> <br />
-        <AdminDashBoardAccodion/> <br />
-        <AdminDashBoardAccodion/> <br />
-        <AdminDashBoardAccodion/> <br />
       </CustomTabPanel>
     </Box>
   );
 }
+
+

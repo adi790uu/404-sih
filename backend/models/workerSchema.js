@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const workerSchema = new mongoose.Schema(
   {
-    username: {
+    email: {
       type: String,
       unique: true,
       trim: true,
@@ -21,6 +21,12 @@ const workerSchema = new mongoose.Schema(
     },
 
     employeeId: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    agencyName: {
       type: String,
       required: true,
       trim: true,

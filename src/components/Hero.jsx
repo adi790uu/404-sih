@@ -1,52 +1,72 @@
-import React, {useState, useEffect} from "react";
-import { Container, TextField, Grid, Card, Box } from "@mui/material";
+import React, { useState, useEffect } from 'react';
+import { Container, TextField, Grid, Card, Box } from '@mui/material';
 
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import io from 'socket.io-client';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import {createPost} from '../actions/posts';
+import { createPost } from '../actions/posts';
 
-import MarqueeSlide from "./MarqueeSlide";
+import MarqueeSlide from './MarqueeSlide';
+
+const socket = io('http://localhost:4000');
 
 export default function Hero() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
-  const [disaster, setDisaster] = useState("");
+  React.useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, [navigate]);
+
+  const [disaster, setDisaster] = useState('');
+  const [medicalAss, setMedicalAss] = useState(false);
   const [formData, setFormData] = useState({
-    desc:'', location:'',  disaster:disaster
-  })
+    location: '',
+    requestType: '',
+    medicalAssistance: medicalAss,
+    city: 'Bangalore',
+    phoneNum: user?.phoneNum,
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(formData);
-    dispatch(createPost(formData, navigate))
+    // dispatch(createPost(formData, navigate));
+    socket.emit('sendInfo', formData);
   };
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
+    const handleCheckBox = (event) => {
+      const selectedDisaster = event.target.value;
+      setDisaster(selectedDisaster); // Update the disaster state
+      setFormData({ ...formData, requestType: selectedDisaster }); // Update the requestType field in formData
+    };
+    
 
-  const handleCheckBox = (event) => {
-    setDisaster(event.target.value);
+  const handleMedicalAss = (event) => {
+    setMedicalAss(event.target.value);
   };
 
   return (
     <Card
       sx={{
-        display: "flex",
+        display: 'flex',
         boxShadow: 6,
-        padding: "20px",
-        borderRadius: "20px",
+        padding: '20px',
+        borderRadius: '20px',
         margin: 4,
       }}
     >
-      <div style={{ width: "600px", margin: 0 }}>
+      <div style={{ width: '600px', margin: 0 }}>
         <br />
         <MarqueeSlide />
       </div>
@@ -54,16 +74,15 @@ export default function Hero() {
       <Container>
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
         >
           <Box component="form" onSubmit={handleSubmit} noValidate>
             <Typography component="h1" variant="h5" sx={{ marginTop: 2 }}>
               Seek Help SOS
             </Typography>
-
             <FormControl fullWidth margin="normal">
               <InputLabel id="demo-simple-select-label">Disaster</InputLabel>
               <Select
@@ -73,22 +92,12 @@ export default function Hero() {
                 label="Age"
                 onChange={handleCheckBox}
               >
-                <MenuItem value={"Fire Hazard"}>Fire Hazard</MenuItem>
-                <MenuItem value={"Flood"}>Flood</MenuItem>
-                <MenuItem value={"Road Accident"}>Road Accident</MenuItem>
-                <MenuItem value={"Rescue"}>Rescue</MenuItem>
+                <MenuItem value={'fire'}>Fire</MenuItem>
+                <MenuItem value={'Flood'}>Flood</MenuItem>
+                <MenuItem value={'Road Accident'}>Road Accident</MenuItem>
+                <MenuItem value={'Rescue'}>Rescue</MenuItem>
               </Select>
             </FormControl>
-
-            <TextField
-              margin="normal"
-              fullWidth
-              id="desc"
-              label="description"
-              name="desc"
-              onChange={handleChange}
-            />
-
             <TextField
               margin="normal"
               required
@@ -98,7 +107,6 @@ export default function Hero() {
               name="location"
               onChange={handleChange}
             />
-
             <Button
               type="submit"
               fullWidth
@@ -107,17 +115,27 @@ export default function Hero() {
             >
               Fetch Location
             </Button>
-
-            <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat" style={{height:" 25px",width: '25px'}}/>
-  <label for="vehicle3" style={{fontSize:'20px'}}> need medical assistance</label> <br />
-
-<br />
+            <input
+              type="checkbox"
+              id="vehicle3"
+              name="vehicle3"
+              value="true"
+              style={{ height: ' 25px', width: '25px' }}
+              onChange={handleMedicalAss}
+            />
+            <label for="vehicle3" style={{ fontSize: '20px' }}>
+              {' '}
+              need medical assistance
+            </label>{' '}
+            <br />
+            <br />
             <Button
               variant="contained"
               size="large"
               color="error"
               fullWidth
-              sx={{ height: "70px" }}
+              sx={{ height: '70px' }}
+              type='submit'
             >
               Help
             </Button>
