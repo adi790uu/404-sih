@@ -4,30 +4,30 @@ const agencySchema = new mongoose.Schema(
   {
     agencyName: {
       type: String,
-      unique: true,
+
       trim: true,
-      required: true,
-      index: 'text',
+      // required: true,
+      // index: 'text',
     },
     password: {
       type: String,
-      required: true,
+      // required: true,
     },
     location: {
       type: String,
-      required: true,
-      unique: true,
+      // required: true,
+      // unique: true,
       trim: true,
     },
     uniqueId: {
       type: String,
-      required: true,
-      unique: true,
+      // required: true,
+      // unique: true,
       trim: true,
     },
     service: {
       type: String,
-      required: true,
+      // required: true,
       trim: true,
     },
     currentRequest: {

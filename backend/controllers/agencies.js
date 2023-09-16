@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Agency = require('../models/agencySchema');
 const Request = require('../models/requestSchema');
+const Collab = require('../models/collaborationSchema');
 
 const registerAgency = async (req, res) => {
   const { agencyName, password, location, uniqueId, service } = req.body;
@@ -72,9 +73,9 @@ const getAgencies = async (req, res) => {
 };
 
 const getRequests = async (req, res) => {
-  console.log(req.user);
+  // console.log(req.user);
   const agency = await Agency.findById({ _id: req.user });
-  console.log(agency);
+  // console.log(agency);
 
   const requests = await Request.find({
     requestType: agency.service,
@@ -86,4 +87,45 @@ const getRequests = async (req, res) => {
   return res.json({ msg: 'Some error occured' });
 };
 
-module.exports = { registerAgency, authAgency, getAgencies, getRequests };
+const getCollabs = async (req, res) => {
+  try {
+    // Check if the user's agency exists and has a valid type
+    const agency = await Agency.findById(req.user);
+
+    if (!agency) {
+      return res.status(404).json({ error: 'Agency not found' });
+    }
+
+    if (!['fire', 'hospital', 'police', 'rescue'].includes(agency.service)) {
+      return res.status(400).json({ error: 'Invalid agency type' });
+    }
+
+    // console.log('in getCollabs');
+
+    let collabs;
+
+    if (agency.service === 'fire') {
+      collabs = await Collab.find({ fire: true });
+      // console.log(collabs);
+    } else if (agency.service === 'hospital') {
+      collabs = await Collab.find({ hospital: true });
+    } else if (agency.service === 'police') {
+      collabs = await Collab.find({ police: true });
+    } else if (agency.service === 'rescue') {
+      collabs = await Collab.find({ rescue: true });
+    }
+
+    return res.json(collabs);
+  } catch (error) {
+    console.error('Error in getCollabs:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+module.exports = {
+  registerAgency,
+  authAgency,
+  getAgencies,
+  getRequests,
+  getCollabs,
+};

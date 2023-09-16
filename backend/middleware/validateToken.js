@@ -4,7 +4,7 @@ const validateToken = async (req, res, next) => {
   const header = req.headers.authorization;
   const token = header.split(' ')[1];
 
-  console.log('verifying token');
+  // console.log('verifying token');
 
   jwt.verify(token, process.env.SECRET, (err, decoded) => {
     if (err) {
@@ -12,7 +12,7 @@ const validateToken = async (req, res, next) => {
     }
 
     const userId = decoded.id;
-    console.log(userId);
+    // console.log(userId);
     req.user = userId;
     next();
   });

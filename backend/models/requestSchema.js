@@ -19,9 +19,8 @@ const requestSchema = new mongoose.Schema(
       trim: true,
     },
     user: {
-      type: String,
-      required: true,
-      trim: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
     },
     ongoing: {
       type: Boolean,

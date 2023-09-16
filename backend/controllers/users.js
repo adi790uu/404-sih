@@ -134,8 +134,12 @@ const authEmployee = async (req, res) => {
   res.json({ msg: 'User not found' });
 };
 
-const getWork = (req, res) => {
-  
-}
+const getWork = (req, res) => {};
 
-module.exports = { registerUser, authUser, registerEmployee, authEmployee, getWork };
+module.exports = {
+  registerUser,
+  authUser,
+  registerEmployee,
+  authEmployee,
+  getWork,
+};
