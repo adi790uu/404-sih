@@ -32,7 +32,7 @@ function App() {
       <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/agencydashboard" element={<AdminDashBoard/>} />
-      {/* <Route path='/agencydashboard' element={(user?.userType==='agency')? <AdminDashBoard/> : <Navigate to='/'/>} /> */}
+      {/* <Route path='/agencydashboard' element={(user?.userType==='agency')? <AdminDashBoard/> : <Navigate to='/'/>} />' */}
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp/>} />
       <Route path="/agencysignin" element={<AgencySignIn />} />

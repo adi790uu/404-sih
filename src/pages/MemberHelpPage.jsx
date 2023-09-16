@@ -12,6 +12,10 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:4000');
+
 export default function MemberHelpPage() {
   const [hospital, setHospital] = useState(false);
   const [fire, setFire] = useState(false);
@@ -24,20 +28,43 @@ export default function MemberHelpPage() {
     hospital,
     fire,
     police,
-    rescue
+    rescue,
+    workerEmail: JSON.parse(localStorage.getItem('profile')).email,
+    city:'Bangalore'
   });
   const handleSubmit = async(event) => {
     event.preventDefault();
-    let response = await fetch("http://localhost:4000",{
-      method:"POST",
-      header:{
-        'Content-Type':""
-      }
-    })
+    console.log("********",formData);
+    socket.emit('collab', formData);
+    // let response = await fetch("http://localhost:4000",{
+    //   method:"POST",
+    //   header:{
+    //     'Content-Type':"application/json"
+    //   }
+    // })
   };
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    const newValue = type === 'checkbox' ? checked : value;
+  
+    setFormData({
+      ...formData,
+      [name]: newValue,
+    });
+  
+    // Update the corresponding state variables if needed
+    if (name === 'hospital') {
+      setHospital(newValue);
+    } else if (name === 'fire') {
+      setFire(newValue);
+    } else if (name === 'police') {
+      setPolice(newValue);
+    } else if (name === 'rescue') {
+      setRescue(newValue);
+    }
+  };
+  
 
   return (
     <Card
@@ -78,7 +105,8 @@ export default function MemberHelpPage() {
                 id="fire"
                 name="fire"
                 value="true"
-                onChange={() => setFire(true)}
+                // onChange={() => setFire(true)}
+                onChange={handleChange}
               />
               fire
             </label>
@@ -90,7 +118,8 @@ export default function MemberHelpPage() {
                 id="hospital"
                 name="hospital"
                 value="true"
-                onChange={() => setHospital(true)}
+                // onChange={() => setHospital(true)}
+                onChange={handleChange}
               />
               Hospital
             </label>
@@ -102,7 +131,8 @@ export default function MemberHelpPage() {
                 id="police"
                 name="police"
                 value="true"
-                onChange={() => setPolice(true)}
+                // onChange={() => setPolice(true)}
+                onChange={handleChange}
               />
               Police
             </label>
@@ -114,7 +144,8 @@ export default function MemberHelpPage() {
                 id="rescue"
                 name="rescue"
                 value="true"
-                onChange={() => setRescue(true)}
+                // onChange={() => setRescue(true)}
+                onChange={handleChange}
               />
               Rescue
             </label>

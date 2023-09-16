@@ -41,7 +41,7 @@ function a11yProps(index) {
 
 export default function BasicTabs(requests) {
 
-  // console.log('000000000000', requests.requests);
+  console.log('000000000000', requests.requests);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -59,19 +59,19 @@ export default function BasicTabs(requests) {
           variant="fullWidth"
         >
           <Tab label="Pending" {...a11yProps(0)} />
-          <Tab label="Completed" {...a11yProps(1)} />
+          {/* <Tab label="Completed" {...a11yProps(1)} /> */}
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        {/* {requests.map((req, index) => { */}
+      
       {requests.requests.map((req, index)=>{
         return(
           <AdminDashBoardAccordion req={req} key={index} index={index} /> 
         )
       })}
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-      </CustomTabPanel>
+      {/* <CustomTabPanel value={value} index={1}>
+      </CustomTabPanel> */}
     </Box>
   );
 }

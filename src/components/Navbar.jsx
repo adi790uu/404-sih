@@ -18,6 +18,30 @@ import { useDispatch } from 'react-redux';
 import { agencysignin } from '../actions/auth';
 import * as actionType from '../constants/actionTypes';
 
+const linkCss = {
+  textDecoration:'none',
+  // backgroundColor:'white',
+  color:'white',
+  padding:'10px',
+  borderRadius:'10px',
+  paddingTop:'5px',
+  paddingBottom:'5px'
+}
+
+const logoutCss ={
+  padding:'10px',
+  backgroundColor:'red',
+  color:'white',
+  borderRadius:'12px',
+  border:0,
+  fontSize:'13px',
+  fontWeight:'600',
+  marginRight:'30px',
+  marginLeft:'30px',
+  // paddingTop:'7px',
+  // paddingBottom:'7px'
+}
+
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -29,7 +53,7 @@ function Navbar() {
     setUser(JSON.parse(localStorage.getItem('profile')));
   }, [navigate]);
   // console.log('-->>>', user?.email);
-  console.log('-->>>', user);
+  // console.log('-->>>', user);
 
   const handleLogout = () => {
     dispatch({ type: actionType.LOGOUT });
@@ -40,8 +64,9 @@ function Navbar() {
 
   return (
     <AppBar position="static" sx={{ marginBottom: 4 }}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
+      {/* <Container maxWidth="xl"> */}
+        <Toolbar disableGutters style={{display:'flex', justifyContent:'space-between'}}>
+          <div>
           <Typography
             variant="h6"
             noWrap
@@ -55,25 +80,13 @@ function Navbar() {
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
+              marginLeft:'25px'
             }}
           >
             404 Help Found.gov.in
           </Typography>
-
-          <Button>
-            <Link to="/workersignin">worker Sign In</Link>
-          </Button>
-          <Button>
-            <Link to="/workersignup">worker Sign up</Link>
-          </Button>
-          <Button>
-            <Link to="/signin">user Sign In</Link>
-          </Button>
-
-          <Button>
-            <Link to="/signup">user Sign up</Link>
-          </Button>
-
+          </div>
+          <div>
           {user && (
             <div>
               {user?.email && (
@@ -92,22 +105,32 @@ function Navbar() {
               )}
             </div>
           )}
+          </div>
+          <div>
+          <Button>
+            <Link to="/workersignin" style={linkCss}>Worker</Link>
+          </Button>
+          {/* <Button>
+            <Link to="/workersignup" style={linkCss}>worker Sign up</Link>
+          </Button> */}
+          <Button>
+            <Link to="/agencysignin" style={linkCss}>Agency</Link>
+          </Button>
+          {/* <Button>
+            <Link to="/agencysignup" style={linkCss}>Agency Sign up</Link>
+          </Button> */}
+          <Button>
+            <Link to="/signin" style={linkCss}>User</Link>
+          </Button>
 
-          <button onClick={handleLogout}>Logout</button>
-
-          {/* <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                // onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box> */}
+          {/* <Button>
+            <Link to="/signup" style={linkCss}>user Sign up</Link>
+          </Button> */}
+          <button onClick={handleLogout} style={logoutCss}>Logout</button>
+          </div>
+          
         </Toolbar>
-      </Container>
+      {/* </Container> */}
     </AppBar>
   );
 }

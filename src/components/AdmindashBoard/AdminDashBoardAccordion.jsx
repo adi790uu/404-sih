@@ -13,8 +13,8 @@ export default function AdminDashBoardAccordion({req}) {
 
   const agencyName = JSON.parse(localStorage.getItem('profile'))?.agencyName;
 
-  const { requestType, location,_id, medicalAssistance, user} = req;
-  // console.log("///////////////////////////",req);
+  const { requestType, location,_id, medicalAssistance, user, } = req;
+  console.log("///////////////////////////",req);
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -24,7 +24,8 @@ export default function AdminDashBoardAccordion({req}) {
   const socketData = {
     requestId: _id,
     agencyName,
-    city:'Bangalore'
+    city:'Bangalore',
+    user:user
   }
 
   const handleAccept =()=>{
@@ -43,7 +44,7 @@ export default function AdminDashBoardAccordion({req}) {
           {location}
           </Typography>
 
-          {medicalAssistance && (
+          {(medicalAssistance !=='false')&& (
             <Typography sx={{ color: 'text.secondary', flex:3 }}>
             Medical Assistance Required
             </Typography>
